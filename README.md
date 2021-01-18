@@ -10,9 +10,19 @@ https://github.com/johanvanhelden/dockerhero
 Ensure you are logged in locally to hub.docker.com using `docker login` and have access to the hub repository.
 (note: your username is used, not your email address).
 
+Ensure the latest version of is present by running:
+```bash
+docker pull mlocati/php-extension-installer
 ```
-$ docker build ./ --tag johanvanhelden/dockerhero-php-8.0-fpm:TAG
-$ docker push johanvanhelden/dockerhero-php-8.0-fpm:TAG
+
+Run the build process:
+```bash
+docker build ./ --tag johanvanhelden/dockerhero-php-8.0-fpm:TAG
+```
+
+Publish the build:
+```bash
+docker push johanvanhelden/dockerhero-php-8.0-fpm:TAG
 ```
 
 Replace `TAG` with the tag you are working on.
@@ -28,4 +38,57 @@ Once it works, delete the custom tag and introduce it into `latest`
 ```
 $ docker-compose up --build
 $ docker exec -it dockerhero-php-8.0-fpm-testing bash
+```
+
+## Enabled PHP modules
+```
+bcmath
+Core
+ctype
+curl
+date
+dom
+exif
+fileinfo
+filter
+ftp
+gd
+hash
+iconv
+imagick
+imap
+intl
+json
+libxml
+mbstring
+mysqli
+mysqlnd
+oci8
+openssl
+pcre
+PDO
+pdo_mysql
+PDO_OCI
+pdo_sqlite
+Phar
+posix
+readline
+redis
+Reflection
+session
+SimpleXML
+soap
+sodium
+SPL
+sqlite3
+ssh2
+standard
+tokenizer
+xml
+xmlreader
+xmlrpc
+xmlwriter
+xsl
+zip
+zlib
 ```

@@ -6,6 +6,8 @@ LABEL maintainer="Johan van Helden <johan@johanvanhelden.com>"
 ARG TZ=Europe/Amsterdam
 ENV TZ ${TZ}
 
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     mariadb-client \
@@ -26,48 +28,27 @@ RUN apt-get update && apt-get install -y \
     unzip \
     cron \
     git \
-    libssh2-1-dev \
     libzip-dev \
     locales-all \
-    libonig-dev \
-    libmagickwand-dev
+    libonig-dev
 
-RUN printf "\n" | pecl install imagick
-
-RUN docker-php-ext-install -j$(nproc) curl \
-    && docker-php-ext-install -j$(nproc) bcmath \
-    && docker-php-ext-install -j$(nproc) exif \
-    && docker-php-ext-install -j$(nproc) mbstring \
-    && docker-php-ext-install -j$(nproc) iconv \
-    && docker-php-ext-install -j$(nproc) intl \
-    && docker-php-ext-install -j$(nproc) soap \
-    && docker-php-ext-install -j$(nproc) xmlrpc \
-    && docker-php-ext-install -j$(nproc) xsl \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
-    && docker-php-ext-install imap \
-    && docker-php-ext-install mysqli pdo pdo_mysql \
-    && docker-php-ext-install zip \
-    && docker-php-ext-enable imagick
-
-# redis module
-RUN \
-    pecl install -o -f redis \
-    &&  echo "extension=redis.so" > /usr/local/etc/php/conf.d/ext-redis.ini
-
-# ssh2 module
-RUN cd /tmp && git clone https://git.php.net/repository/pecl/networking/ssh2.git && cd /tmp/ssh2 \
-    && phpize && ./configure && make && make install \
-    && echo "extension=ssh2.so" > /usr/local/etc/php/conf.d/ext-ssh2.ini \
-    && rm -rf /tmp/ssh2
+RUN install-php-extensions \
+    bcmath \
+    exif \
+    gd \
+    imagick \
+    imap \
+    intl \
+    mysqli \
+    pdo_mysql \
+    redis \
+    soap \
+    xdebug \
+    xsl \
+    zip
 
 # Set the timezone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-# Install the xdebug extension
-RUN pecl install xdebug && \
-    docker-php-ext-enable xdebug
 
 # Comment out xdebug extension line per default
 RUN sed -i 's/^zend_extension=/;zend_extension=/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
