@@ -53,7 +53,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Comment out xdebug extension line per default
 RUN sed -i 's/^zend_extension=/;zend_extension=/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
-# Copy xdebug configration for remote debugging
+# Copy xdebug configuration for remote debugging
 COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # Copy the php-fpm config
