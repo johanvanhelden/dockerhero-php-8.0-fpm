@@ -30,7 +30,8 @@ RUN apt-get update && apt-get install -y \
     git \
     libzip-dev \
     locales-all \
-    libonig-dev
+    libonig-dev \
+    wkhtmltopdf
 
 RUN install-php-extensions \
     bcmath \
