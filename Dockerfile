@@ -44,7 +44,9 @@ RUN install-php-extensions \
     pdo_mysql \
     redis \
     soap \
+    ssh2 \
     xdebug \
+    xmlrpc \
     xsl \
     zip
 

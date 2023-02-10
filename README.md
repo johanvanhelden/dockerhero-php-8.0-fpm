@@ -63,12 +63,10 @@ libxml
 mbstring
 mysqli
 mysqlnd
-oci8
 openssl
 pcre
 PDO
 pdo_mysql
-PDO_OCI
 pdo_sqlite
 Phar
 posix
