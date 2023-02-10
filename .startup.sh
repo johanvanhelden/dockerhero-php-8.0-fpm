@@ -7,4 +7,5 @@ crontab /var/crons/crons
 cron -f &
 
 # php-fpm must be started in the foreground
-php-fpm
+# exec for signal handling
+exec php-fpm
